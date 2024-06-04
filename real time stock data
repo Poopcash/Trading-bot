@@ -1,0 +1,27 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np  
+import yfinance as yf
+import mplfinance as mpf
+
+
+ticker = input("Enter ticker symbol: ")
+st = input("Enter starting date: ")
+et = input("Enter endind date: ")
+
+
+data = yf.download(ticker, start=st, end=et)
+
+dividends = yf.Ticker(ticker).dividends
+dividends_in_period = dividends.loc[st:et]
+
+mkt_cap = yf.Ticker(ticker).info['marketCap']
+
+up = "#00ff00"
+down = "#ff0000"
+marketcolors = mpf.make_marketcolors(up=up, down=down)
+mystyle = mpf.make_mpf_style(base_mpf_style='yahoo', marketcolors=marketcolors)
+
+print(dividends_in_period)
+print(f"{ticker} market cap: ${mkt_cap:,}")
+mpf.plot(data, type="candle", style=mystyle)

@@ -1,0 +1,11 @@
+input shortMAlength = 9;
+input longMAlength = 20;
+
+def ShortMA = simpleMovingAvg (Length = shortMAleungth);
+def LongMA = simpleMovingAvg (Length = longMAlength);
+
+def buy = shortMA[1] , length[1] and shortMA . longMA;
+def sell = shortMA < longMA;
+
+addOrder: (OrderType. BUY_TO_OPEN, buy);
+addOrder: (OrderType. SELL_TO_CLOSE, sell);
